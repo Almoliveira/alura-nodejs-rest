@@ -6,7 +6,7 @@ class Tabelas {
 
   criarAtendimentos() {
     const sql =
-      "CREATE TABLE IF NOT EXISTS Atendimentos ( " +
+      "CREATE TABLE IF NOT EXISTS Atendimento ( " +
       " id int NOT NULL AUTO_INCREMENT, " +
       " cliente varchar(50) NOT NULL, " +
       " pet varchar(20), " +
@@ -20,7 +20,7 @@ class Tabelas {
       if (erro) {
         console.log(erro);
       } else {
-        console.log("Tabela atendimentos criada com sucesso!");
+        console.log("Tabela Atendimento criada com sucesso!");
       }
     });
   }

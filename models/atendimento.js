@@ -32,17 +32,73 @@ class Atendimento {
     } else {
       const atendimentoDatado = { ...atendimento, dataCriacao, data };
 
-      const sql = "INSERT INTO Atendimentos SET ? ";
+      const sql = "INSERT INTO Atendimento SET ? ";
 
       conexao.query(sql, atendimentoDatado, (erro, resultados) => {
         if (erro) {
           res.status(400).json(erro);
         } else {
-          res.status(201).json(resultados);
+          res.status(201).json(atendimento);
         }
       });
     }
   }
+
+  lista(res) {
+    const sql = "SELECT * FROM Atendimento";
+
+    conexao.query(sql, (erro, resultados) => {
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(201).json(resultados);
+      }
+    });
+  }
+
+  buscarPorId(id, res) {
+    const sql = `SELECT * FROM Atendimento WHERE id = ${id}`;
+
+    conexao.query(sql, (erro, resultados) => {
+      const atendimento = resultados.length ? resultados[0] : "{}";
+
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(201).json(atendimento);
+      }
+    });
+  }
+
+  alterar(id, valores, res) {
+    if (valores.data) {
+      valores.data = moment(valores.data, "DD/MM/YYYY").format(
+        "YYYY-MM-DD HH:MM:SS"
+      );
+    }
+    const sql = "UPDATE Atendimento SET ? where id=?";
+
+    conexao.query(sql, [valores, id], (erro, resultados) => {
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(200).json({...valores, id});
+      }
+    });
+  }
+
+  remover(id, res) {
+    const sql = 'DELETE FROM Atendimento where id=?';
+
+    conexao.query(sql, [id], (erro, resultados) => {
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(200).json({id: id});
+      }
+    });
+  }
+
 }
 
 module.exports = new Atendimento();
