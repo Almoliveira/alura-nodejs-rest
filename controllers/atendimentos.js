@@ -9,7 +9,6 @@ module.exports = (app) => {
 
   app.post("/atendimentos", (req, res) => {
     const atendimento = req.body;
-    Atendimento.adiciona(atendimento);
-    console.log("POS Atendimento")
+    Atendimento.adiciona(atendimento ,res);
   });
 };
